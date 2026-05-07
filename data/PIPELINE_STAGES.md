@@ -20,10 +20,13 @@ how each stage maps onto folders in this repo.
 | India | 99,049 YouTube comments → 951 → 102 / 102 |
 | Kenya | 19,394 tweets → 3,140 → 103 / 103 |
 
-## Models (from Appendix C7)
+## Models (from Appendix C7 + actual notebook usage)
 
 - Embedding: `text-embedding-3-large` (3072 dimensions), cosine similarity
-- LLM thematic + sentiment + emotion: `gpt-5.1`, temperature `0`, strict JSON output, validated against the closed-set country taxonomy in [`codebook/codebook_spec.md`](../codebook/codebook_spec.md)
+- **Production labeling** (`gpt-5.1`, temperature `0`, strict JSON output) — themes, sentiment, emotion, sexism flags. Validated against the closed-set country taxonomy in [`codebook/codebook_spec.md`](../codebook/codebook_spec.md).
+- **Auxiliary lightweight** (`gpt-4o-mini`) — language tagging, coarse pre-filters, API health checks. Not part of the report's primary outputs; faster and cheaper for non-substantive tasks.
+
+Both model names are pinned in [`src/wbproj/config.py`](../src/wbproj/config.py) (`OPENAI_MODEL` and `OPENAI_MODEL_LIGHT`).
 
 ## What each repo file is for
 

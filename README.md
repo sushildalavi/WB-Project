@@ -205,9 +205,14 @@ failing — so the validator is portable.
 - The BBNaija TikTok reach dataset described in Section 2.1 of the report
   (~60K comments / 372 videos) is not currently in the repo. Drop a file at
   `data/raw/nigeria/BBNaija_tiktok.xlsx` to enable the BBNaija TikTok tab.
-- The pipeline runs `gpt-5.1` at `temperature=0` for all thematic / sentiment
-  / emotion classification, and `text-embedding-3-large` for semantic rerank.
-  Centralized in [`src/wbproj/config.py`](src/wbproj/config.py).
+- **Two model tiers** (centralized in [`src/wbproj/config.py`](src/wbproj/config.py)):
+  - `gpt-5.1` at `temperature=0` for production labeling — themes, sentiment,
+    emotion, and sexism flags. This is what the report attributes to
+    "gpt-5.1 (standardized)" in Appendix C7.
+  - `gpt-4o-mini` for auxiliary lightweight tasks — language tagging
+    (English / Hindi / Hinglish / Swahili / Sheng), API health checks, and
+    coarse pre-filtering before the embedding rerank.
+  - `text-embedding-3-large` for semantic rerank.
 - Discourse data are from self-selected, platform-specific, digitally active
   audiences — descriptive of those publics, not representative of national
   populations.
