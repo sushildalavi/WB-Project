@@ -1,29 +1,23 @@
 """Streamlit dashboard for the WB gender-norms project.
 
-Run from the repo root:
+Run from the repo root after `pip install -e .`:
     streamlit run src/app.py
 """
 from __future__ import annotations
-
-import sys
-from pathlib import Path
 
 import pandas as pd
 import plotly.express as px
 import streamlit as st
 
-# Make `wbproj` importable when Streamlit launches this file directly.
-sys.path.insert(0, str(Path(__file__).resolve().parent))
-
-from wbproj.clean import expand_themes_column  # noqa: E402
-from wbproj.loaders import (  # noqa: E402
+from wbproj import paths
+from wbproj.clean import expand_themes_column
+from wbproj.loaders import (
     load_bbnaija_human_coding,
     load_bbnaija_tiktok,
     load_mih_human_coding_extended,
     load_mih_virality,
     load_rhon_human_coding,
 )
-from wbproj import paths  # noqa: E402
 
 TIKTOK_HASHTAG_COLS = ["Hashtag1", "Hashtag2", "Hashtag3"]
 

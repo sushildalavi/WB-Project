@@ -1,0 +1,46 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "wbproj"
+version = "0.1.0"
+description = "WB MIP Social Listening — gender-norm discourse on social media around popular TV in Nigeria, India, and Kenya."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "Proprietary — WB / Penn (research use)" }
+authors = [{ name = "Sushil Dalavi" }]
+keywords = [
+    "social-listening",
+    "gender-norms",
+    "nlp",
+    "thematic-analysis",
+    "sentiment-analysis",
+    "world-bank",
+]
+dependencies = [
+    "pandas>=2.0",
+    "openpyxl>=3.1",
+    "numpy>=1.26",
+    "scikit-learn>=1.3",
+    "streamlit>=1.30",
+    "plotly>=5.18",
+    "openai>=1.40",
+    "python-dotenv>=1.0",
+    "tqdm>=4.66",
+    "langdetect>=1.0.9",
+    "matplotlib>=3.8",
+    "seaborn>=0.13",
+    "python-docx>=1.1",
+]
+
+[project.urls]
+Homepage = "https://github.com/sushildalavi/WB-Project"
+Repository = "https://github.com/sushildalavi/WB-Project"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["wbproj*"]
+
+[tool.setuptools.package-data]
+wbproj = ["py.typed"]

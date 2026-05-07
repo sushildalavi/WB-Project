@@ -20,9 +20,6 @@ from pathlib import Path
 
 import pandas as pd
 
-SRC = Path(__file__).resolve().parents[1] / "src"
-sys.path.insert(0, str(SRC))
-
 from wbproj import paths
 
 # Layer 1 — strict header cleanness asserted.
