@@ -21,7 +21,9 @@ from wbproj.loaders import (  # noqa: E402
     load_bbnaija_tiktok,
     load_mih_human_coding_extended,
     load_mih_virality,
+    load_rhon_human_coding,
 )
+from wbproj import paths  # noqa: E402
 
 TIKTOK_HASHTAG_COLS = ["Hashtag1", "Hashtag2", "Hashtag3"]
 
@@ -342,6 +344,61 @@ def render_bbnaija_dashboard() -> None:
 
 
 # ---------------------------------------------------------------------------
+# Real Housewives of Nairobi (Kenya) dashboard
+# ---------------------------------------------------------------------------
+def render_rhon_dashboard() -> None:
+    df_human = load_rhon_human_coding()
+    df_llm = pd.read_excel(paths.KENYA.relevant_comments) if paths.KENYA.relevant_comments.exists() else pd.DataFrame()
+
+    st.title("👑 Real Housewives of Nairobi — Twitter/X Insights")
+
+    st.markdown("### 🧩 Human Coding Overview")
+    if df_human.empty:
+        st.info("No human-coded data available.")
+    else:
+        c1, c2, c3 = st.columns(3)
+        c1.metric("Comments coded", f"{len(df_human):,}")
+        text_col = next((c for c in df_human.columns if "comment text" in c.lower()), None)
+        if text_col:
+            c2.metric("Unique comments", f"{df_human[text_col].nunique():,}")
+        c3.metric("Coded fields", f"{df_human.shape[1]}")
+
+    if not df_llm.empty and {"themes", "sentiment"}.issubset(df_llm.columns):
+        st.markdown("### 🔥 LLM Theme × Sentiment (Relevant 416-row subset)")
+        df_exp = expand_themes_column(df_llm.copy(), col="themes")
+        pivot = df_exp.pivot_table(
+            index="themes", columns="sentiment", aggfunc="size", fill_value=0
+        ).reset_index()
+        long = pivot.melt(id_vars="themes", var_name="Sentiment", value_name="Count")
+        fig = px.density_heatmap(
+            long, x="Sentiment", y="themes", z="Count", color_continuous_scale="YlGnBu"
+        )
+        fig.update_traces(texttemplate="%{z}", textfont={"size": 11})
+        fig.update_layout(template="simple_white", title="Themes by sentiment — RHON")
+        st.plotly_chart(fig, use_container_width=True)
+        st.dataframe(pivot.set_index("themes"), use_container_width=True)
+
+        c1, c2 = st.columns(2)
+        with c1:
+            sent_counts = df_llm["sentiment"].value_counts().reset_index()
+            sent_counts.columns = ["Sentiment", "Count"]
+            fig2 = px.pie(sent_counts, values="Count", names="Sentiment", hole=0.4,
+                          title="Sentiment split (LLM-coded)")
+            fig2.update_traces(textinfo="percent+label")
+            st.plotly_chart(fig2, use_container_width=True)
+        with c2:
+            theme_counts = df_exp["themes"].value_counts().reset_index().head(10)
+            theme_counts.columns = ["Theme", "Count"]
+            fig3 = px.bar(theme_counts.sort_values("Count"), x="Count", y="Theme",
+                          orientation="h", color="Count", color_continuous_scale="Viridis",
+                          title="Top 10 themes")
+            fig3.update_layout(template="simple_white")
+            st.plotly_chart(fig3, use_container_width=True)
+    else:
+        st.info("LLM-coded RHON data not available.")
+
+
+# ---------------------------------------------------------------------------
 # Entrypoint
 # ---------------------------------------------------------------------------
 def main() -> None:
@@ -349,13 +406,15 @@ def main() -> None:
     with st.sidebar:
         choice = st.radio(
             "Dashboard",
-            ["MIH S2 (India)", "BBNaija (Nigeria)"],
+            ["MIH S2 (India)", "BBNaija (Nigeria)", "RHON (Kenya)"],
             index=0,
         )
     if choice.startswith("MIH"):
         render_mih_dashboard()
-    else:
+    elif choice.startswith("BBNaija"):
         render_bbnaija_dashboard()
+    else:
+        render_rhon_dashboard()
 
 
 if __name__ == "__main__":
