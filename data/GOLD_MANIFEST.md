@@ -15,13 +15,13 @@ to the upstream gold release; their md5 hashes are pinned by
 | `India_MIH_S2/MIH_S2_YTvidsdata.xlsx` | [`data/raw/india/MIH_S2_yt_videos_data.xlsx`](raw/india/MIH_S2_yt_videos_data.xlsx) |
 | `India_MIH_S2/MIH_S2_Final_Topic Relevant.xlsx` | [`data/processed/india/MIH_S2_final_topic_relevant.xlsx`](processed/india/MIH_S2_final_topic_relevant.xlsx) |
 | `India_MIH_S2/MIH_S2 for LLM Coding.xlsx` | [`data/processed/india/MIH_S2_for_llm_coding.xlsx`](processed/india/MIH_S2_for_llm_coding.xlsx) |
-| `India_MIH_S2/MIH_S2_Virality Report.csv` | [`data/processed/india/MIH_S2_virality_report.csv`](processed/india/MIH_S2_virality_report.csv) |
+| `India_MIH_S2/MIH_S2_Virality Report.csv` | [`data/reach/india/MIH_S2_youtube_virality.csv`](reach/india/MIH_S2_youtube_virality.csv) |
 | `India_MIH_S2/MIH_S2 YT Human Coding Dataset.xlsx` | [`data/human_coded/india/MIH_S2_human_coding_dataset.xlsx`](human_coded/india/MIH_S2_human_coding_dataset.xlsx) |
 | `Kenya_RHONairobi/RHONairobi.csv` | [`data/raw/kenya/RHONairobi_tweets.csv`](raw/kenya/RHONairobi_tweets.csv) |
 | `Kenya_RHONairobi/RHO Nairobi Tiktok.csv` | [`data/raw/kenya/RHONairobi_tiktok.csv`](raw/kenya/RHONairobi_tiktok.csv) |
 | `Kenya_RHONairobi/RHONairobi_Final Topic Relevant.xlsx` | [`data/processed/kenya/RHONairobi_final_topic_relevant.xlsx`](processed/kenya/RHONairobi_final_topic_relevant.xlsx) |
 | `Kenya_RHONairobi/RHONairobi for LLM Coding.xlsx` | [`data/processed/kenya/RHONairobi_for_llm_coding.xlsx`](processed/kenya/RHONairobi_for_llm_coding.xlsx) |
-| `Kenya_RHONairobi/rhonairobi_videos virality.csv` | [`data/processed/kenya/RHONairobi_videos_virality.csv`](processed/kenya/RHONairobi_videos_virality.csv) |
+| `Kenya_RHONairobi/rhonairobi_videos virality.csv` | [`data/reach/kenya/RHONairobi_youtube_virality.csv`](reach/kenya/RHONairobi_youtube_virality.csv) |
 | `Kenya_RHONairobi/RHONairobi Human Coding Dataset.csv` | [`data/human_coded/kenya/RHONairobi_human_coding_dataset.csv`](human_coded/kenya/RHONairobi_human_coding_dataset.csv) |
 | `Nigeria_BBNaija/BBNaija.csv` | [`data/raw/nigeria/BBNaija_nairaland.csv`](raw/nigeria/BBNaija_nairaland.csv) |
 | `Nigeria_BBNaija/BBNaija Sentiment & Emotions.csv` | [`data/processed/nigeria/BBNaija_sentiment_emotions.csv`](processed/nigeria/BBNaija_sentiment_emotions.csv) |

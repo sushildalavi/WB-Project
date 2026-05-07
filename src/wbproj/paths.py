@@ -21,6 +21,7 @@ class _Country:
         self.interim = DATA / "interim" / name
         self.processed = DATA / "processed" / name
         self.human_coded = DATA / "human_coded" / name
+        self.reach = DATA / "reach" / name
 
 
 INDIA = _Country("india")
@@ -34,7 +35,7 @@ INDIA.cleaned = INDIA.interim / "MIH_S2_cleaned.xlsx"
 INDIA.topic_relevant = INDIA.processed / "MIH_S2_final_topic_relevant.xlsx"
 INDIA.for_llm_coding = INDIA.processed / "MIH_S2_for_llm_coding.xlsx"
 INDIA.final_dataset = INDIA.processed / "MIH_S2_final_dataset.xlsx"
-INDIA.virality = INDIA.processed / "MIH_S2_virality_report.csv"
+INDIA.virality = INDIA.reach / "MIH_S2_youtube_virality.csv"
 INDIA.human_coding = INDIA.human_coded / "MIH_S2_human_coding_dataset.xlsx"        # 114 rows, codebook v2
 INDIA.human_coding_extended = INDIA.human_coded / "MIH_S2_human_coding_extended.xlsx"  # 951 rows, codebook v1
 
@@ -47,7 +48,7 @@ KENYA.topic_relevant = KENYA.processed / "RHONairobi_final_topic_relevant.xlsx"
 KENYA.for_llm_coding = KENYA.processed / "RHONairobi_for_llm_coding.xlsx"
 KENYA.relevant_comments = KENYA.processed / "RHONairobi_relevant_comments.xlsx"
 KENYA.scored = KENYA.processed / "RHONairobi_scored.xlsx"
-KENYA.videos_virality = KENYA.processed / "RHONairobi_videos_virality.csv"
+KENYA.videos_virality = KENYA.reach / "RHONairobi_youtube_virality.csv"
 KENYA.human_coding = KENYA.human_coded / "RHONairobi_human_coding_dataset.csv"
 
 # Nigeria --------------------------------------------------------------------
@@ -66,7 +67,7 @@ GOLD_MIRROR: dict[Path, Path] = {
     INDIA.raw_videos:       GOLD_RELEASE / "India_MIH_S2/MIH_S2_YTvidsdata.xlsx",
     INDIA.topic_relevant:   GOLD_RELEASE / "India_MIH_S2/MIH_S2_Final_Topic Relevant.xlsx",
     INDIA.for_llm_coding:   GOLD_RELEASE / "India_MIH_S2/MIH_S2 for LLM Coding.xlsx",
-    INDIA.virality:         GOLD_RELEASE / "India_MIH_S2/MIH_S2_Virality Report.csv",
+    INDIA.virality:         GOLD_RELEASE / "India_MIH_S2/MIH_S2_Virality Report.csv",  # now in data/reach/
     INDIA.human_coding:     GOLD_RELEASE / "India_MIH_S2/MIH_S2 YT Human Coding Dataset.xlsx",
     KENYA.raw_tweets:       GOLD_RELEASE / "Kenya_RHONairobi/RHONairobi.csv",
     KENYA.raw_tiktok:       GOLD_RELEASE / "Kenya_RHONairobi/RHO Nairobi Tiktok.csv",
