@@ -23,3 +23,6 @@ venv/
 # Excel/Office temp
 ~$*.xlsx
 ~$*.docx
+
+# Keep the report draft local-only — don't publish to github
+WB_MIP*.docx
