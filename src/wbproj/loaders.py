@@ -73,16 +73,61 @@ def load_bbnaija_human_coding() -> pd.DataFrame:
 
 
 def load_rhon_human_coding() -> pd.DataFrame:
-    """Kenya human-coded comments (115 rows — gold release)."""
+    """Kenya human-coded comments (115 rows — gold release).
+
+    The Kenya v2 codebook does not have a top-level ``Sentiment`` column;
+    sentiment-like signals live in attitude-toward-* columns. ``comment_text``
+    is exposed for parity with the India and Nigeria loaders.
+    """
     df = pd.read_csv(paths.KENYA.human_coding)
-    return clean_columns(df)
+    df = clean_columns(df)
+    if "Comment Text" in df.columns:
+        df = df.rename(columns={"Comment Text": "comment_text"})
+    return df
+
+
+#: Columns the BBNaija TikTok loader knows how to handle. The file is optional;
+#: if you supply one, it should contain at least these:
+TIKTOK_REQUIRED_COLUMNS = ("video_url", "views", "likes", "comments", "shares")
+#: Optional columns; if present, additional metrics will be computed.
+TIKTOK_OPTIONAL_COLUMNS = (
+    "created_at",
+    "Author Username",
+    "followers",
+    "days_since_posted",
+    "Hashtag1",
+    "Hashtag2",
+    "Hashtag3",
+)
 
 
 def load_bbnaija_tiktok() -> pd.DataFrame:
-    """Optional BBNaija TikTok metrics. Returns empty df if file isn't present."""
+    """Optional BBNaija TikTok metrics.
+
+    Returns an empty df if no file is shipped at ``paths.NIGERIA.tiktok``.
+    If a file *is* present but the required columns are missing, this raises
+    a ``ValueError`` rather than silently producing a half-loaded frame.
+
+    Required columns: ``video_url, views, likes, comments, shares``.
+
+    Optional columns that, if present, get used:
+    ``created_at``, ``Author Username``, ``followers``, ``days_since_posted``,
+    ``Hashtag1``, ``Hashtag2``, ``Hashtag3``.
+
+    Computed when the underlying inputs exist:
+    ``like_rate``, ``comment_rate``, ``share_rate``, ``engagement_rate``,
+    ``amplification_rate``, ``reach_factor``, ``velocity``.
+    """
     if not paths.NIGERIA.tiktok.exists():
         return pd.DataFrame()
     df = pd.read_excel(paths.NIGERIA.tiktok)
+    missing = [c for c in TIKTOK_REQUIRED_COLUMNS if c not in df.columns]
+    if missing:
+        raise ValueError(
+            f"BBNaija TikTok file at {paths.NIGERIA.tiktok} is missing required "
+            f"columns {missing}. Required: {list(TIKTOK_REQUIRED_COLUMNS)}; "
+            f"optional: {list(TIKTOK_OPTIONAL_COLUMNS)}."
+        )
     for col in ("views", "likes", "comments", "shares", "followers", "days_since_posted"):
         if col in df.columns:
             df[col] = pd.to_numeric(df[col], errors="coerce")
