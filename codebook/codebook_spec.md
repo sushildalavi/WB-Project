@@ -1,87 +1,96 @@
-# Human-coding instrument
+# Coding instrument
 
-This is the WB instrument used to code social-media comments by hand. It is
-the ground-truth schema that LLM coding is benchmarked against. Two versions
-exist in the data — list both for traceability.
+This document mirrors **Appendix B (theme taxonomies)** and **Appendix F
+(sentiment and emotion definitions)** of the WB MIP Social Listening Report.
+Every comment in the focused-coded subsets receives multi-label theme tags,
+a 3-class sentiment label, and an emotion tag.
 
-## v2 (current — used for BBNaija, RHONairobi, India v2)
+Theme taxonomies are **closed-set** and **per-country** — Nigeria, India, and
+Kenya each have their own list because the discourse genres differ. A
+comment may receive multiple theme labels.
 
-For each comment, code the following fields. Numeric scales are listed.
+## Theme taxonomy — Nigeria (BBNaija S9, Nairaland)
 
-### Identification
-- `Comment ID`
-- `Comment Text`
+| # | Theme | Definition |
+|---|-------|------------|
+| 1 | Participation, Competition, and Influence | Voting strength, fan bases, influence in the house, strategy, evictions, alliances. |
+| 2 | Marriage, Relationships, and Loyalty Norms | Romantic pairings, loyalty, "ship" dynamics, marriage expectations, jealousy, fidelity. |
+| 3 | Sexuality and Respectability Policing | Policing of women's sexual behavior, dress, perceived promiscuity, decency, sexual double standards. |
+| 4 | Sexist or Derogatory Language | Gendered insults, slurs, sexualized name-calling, humiliation. |
+| 5 | Conflict, Insults, and Humiliation Dynamics | Audience reactions to fights, insults, bullying, dragging, public embarrassment. |
+| 6 | Moral Judgment and Character Evaluation | Character labeling ("liar", "wicked"), deservingness framing, real-world moral consequence talk. |
+| 7 | Gender Norms and Gender Double Standards | Explicit or implicit references to gendered expectations and double standards, including stereotyping. |
+| 8 | Emotional Expression | Strong affect (anger, contempt, ridicule, disgust, mockery, sympathy) shaping evaluation. |
+| 9 | Behavioral Responses and Engagement | Calls to action and participation behaviors (urging others to vote, evict, support). |
 
-### Top-level labels
-- `Themes` — free-text or list (e.g. `["Marriage/Husband-Wife", "Money/Prize/Votes"]`)
-- `Sentiment` — Positive / Neutral / Negative / Mixed / Unclear
-- `Emotion Detection` — primary emotion(s)
-- `Tone` — descriptor
+## Theme taxonomy — India (Made in Heaven S2, YouTube)
 
-### Media reference
-- Mentions specific media content? `0=No, 1=Yes`
-  - If Y: what content?
-  - If Y: attitude toward media content? `1=Pos / 2=Neu / 3=Neg / 4=Mixed / 5=Unclear`
-    - If positive: what does the author like?
-    - If negative: what does the author dislike?
+| # | Theme | Definition |
+|---|-------|------------|
+| 1 | India Local Culture | Culture-specific framing of norms and identity ("society" talk, tradition vs modernity, language). |
+| 2 | Gender Norms & Dynamics | General gender roles and expectations, patriarchy, marriage-role expectations, double standards. |
+| 3 | Gender-Based Violence | Discussion of coercion, emotional abuse, physical abuse, threats, harm. |
+| 4 | Economic Empowerment | Women's financial independence, work, career, "gold digger" framing. |
+| 5 | Caste / Intersectionality | Caste, caste-coded respectability, privilege/exclusion, identity-based hierarchy. |
+| 6 | Body & Beauty Standards | Body policing, colorism, attractiveness, appearance-based judgment. |
 
-### Gender
-- Mentions gender or gender roles? `0/1`
-  - If Y: characterize the gender role(s):
-    - `1` Women do domestic/care work
-    - `2` Women have limited economic freedom
-    - `3` Women have limited leadership
-    - `4` Women are in subservient roles
-    - `5` Women do not discuss sex / reproductive health
-    - `5` Men are sexual aggressors *(note: original codebook has duplicate `5`)*
-    - `6` Men are leaders
-    - `7` Men are violent
-    - `8` Men are primary breadwinners
-  - If Y: free-text — other gender themes
-  - If Y: attitude toward gender norms `1–5`
-  - If Y: attitude toward women `1–5`
-  - If Y: framing — `1=Collective, 2=Individual, 3=Can't tell/N/A`
-  - If Y: contests or reproduces stereotypes? `0=Contest, 1=Reproduce, 3=Unclear`
+## Theme taxonomy — Kenya (RHONairobi, X/Twitter)
 
-### Race / ethnicity / caste / tribe / language
-- Mentions race/ethnicity/nationality/tribe/caste/language re: media? `0/1`
-  - If Y: which?
-  - If Y: attitude `1–5`
+| # | Theme | Definition |
+|---|-------|------------|
+| 1 | Respectability, Morality, and Social Status | Class and status performance, "classy" vs "vulgar", legitimacy in elite space, taste, etiquette. |
+| 2 | Conflict, Insults, and Social Sanctioning | Episode-driven conflict framing, name-calling, social punishment, audience-as-arbiter dynamics. |
+| 3 | Sexuality, Body Politics, and Respectability Policing | Sexualized evaluation, body-focused commentary as legitimacy test, dress policing. |
+| 4 | Sexist or Derogatory Language | Explicit misogynistic or gendered slurs, degrading labels (distinct from general insults). |
+| 5 | Marriage, Relationships, and Intimate Power | Husbands, marriages, relationship power, dependency, loyalty. |
+| 6 | Gender Norms, Femininity, and Masculinity Ideals | Explicit talk about womanhood, "pro-women" identity claims, femininity/masculinity expectations. |
+| 7 | Cultural, Religious, and Ethnic Framing | Identity cues and cultural markers (language, tribe/ethnicity, religion). |
+| 8 | Emotional Expression | Strong affect (love, hate, disgust, anger, praise, mockery) framing evaluation. |
+| 9 | Behavioral Responses and Discursive Positioning | Direct prescriptions (remove cast, cancel) plus stance-taking. |
 
-### Sexism
-- Includes sexist or derogatory language? `0/1`
-  - If Y: provide a quote
+## Sentiment categories
 
-### Emotions (Ekman+)
-- Comment-level emotions: `1=Contempt, 2=Anger, 3=Disgust, 4=Sadness, 5=Shame, 6=Embarrassment, 7=Guilt, 8=Compassion, 9=Pride, 10=No emotion`
-- Author's emotions toward media content: same scale
+3-class scheme applied uniformly across countries.
 
-### Knowledge effects
-- Indicates new knowledge acquired? `0/1` — if Y, what?
-- Indicates existing knowledge reinforced? `0/1` — if Y, what?
+- **Positive** — approval, support, admiration, endorsement. Includes praise of a character, validation of a gender stance, or affirmation of empowerment, resilience, or fairness. May still include critique, but the dominant tone is supportive.
+- **Neutral** — descriptive, interpretive, or observational. Summaries, motivation explanations, clarifying questions, or ambivalence without endorsing or condemning.
+- **Negative** — disapproval, condemnation, ridicule, anger, disgust, moral sanctioning. May include shaming, insults, punitive judgment, or strong rejection of a behavior, character, or norm.
 
-### LLM ground-truth comparison
-- LLM emotion output (string)
-- LLM emotion confidence (float)
-- "How accurate is this output?" `0=Inaccurate, 1=Accurate`
-  - If inaccurate: which emotions are accurate / inaccurate / missing
+> Negative sentiment does *not* automatically indicate opposition to gender
+> equality — in several Indian comments, negativity was directed at *harmful
+> norms themselves* rather than at women.
 
----
+## Emotion categories
 
-## v1 (legacy — used for older MIH_S2 and RHON YT&X human-coding files in `archive/`)
+Used to capture affective intensity beyond sentiment alone. Coded for the
+dominant emotion expressed in each comment.
 
-Same questions, with these differences:
-- No collective/individual framing field
-- No contest/reproduce stereotypes field
-- No tribe / caste in the ethnicity question (Kenya/India only)
-- Column headers contain newlines and tabs (e.g. `'\n         \nDoes the comment include any sexist or derogatory language?'`) — strip when loading
-- Some duplicate-question columns appear with `.1` suffixes after `pd.read_excel`
+| Emotion | Definition |
+|---------|------------|
+| Anger | Irritation, outrage, hostility, moral fury. Often accompanies punitive judgment; escalatory. |
+| Contempt / Disgust | Scorn, derision, revulsion. Signals moral superiority or social distancing; closely tied to reputational sanctioning. |
+| Shame / Embarrassment | Discomfort, awkwardness, second-hand embarrassment — at characters or at the norms portrayed. |
+| Sadness / Distress | Sorrow, empathy, emotional heaviness in response to harm, loss, injustice. Most often directed at conditions or structures, not individuals. |
+| Encouragement / Support | Hope, pride, admiration, reassurance — toward a character or gender-progressive behavior. Typically co-occurs with positive sentiment. |
 
-When working with archive files, normalize columns first:
-```python
-df.columns = (
-    df.columns.astype(str)
-    .str.replace(r"\s+", " ", regex=True)
-    .str.strip()
-)
-```
+## How sentiment + emotion + theme combine
+
+The analytic move is to look at **theme × sentiment** distributions to find
+"rejection zones" — themes consistently negative-skewed mark portrayals the
+audience finds *less acceptable*. Themes with neutral/positive sentiment
+mark portrayals that are *relatively more acceptable*.
+
+This is what the heatmaps in the report's Appendix G visualize.
+
+## Codebook versions in this repo
+
+| File | Codebook | Notes |
+|------|----------|-------|
+| [`data/human_coded/india/MIH_S2_human_coding_dataset.xlsx`](../data/human_coded/india/MIH_S2_human_coding_dataset.xlsx) | v2 (current) | 114 rows, gold pilot |
+| [`data/human_coded/kenya/RHONairobi_human_coding_dataset.csv`](../data/human_coded/kenya/RHONairobi_human_coding_dataset.csv) | v2 (current) | 115 rows, gold pilot |
+| [`data/human_coded/nigeria/BBNaija_human_coding_dataset.xlsx`](../data/human_coded/nigeria/BBNaija_human_coding_dataset.xlsx) | v2 (current) | 100 rows |
+| [`data/human_coded/india/MIH_S2_human_coding_extended.xlsx`](../data/human_coded/india/MIH_S2_human_coding_extended.xlsx) | v1 (legacy) | 951 rows, working extension; not part of pilot |
+
+Differences between v1 and v2:
+- v2 adds: collective/individual framing, contest/reproduce stereotypes, tribe/caste in the ethnicity question.
+- v1 has whitespace/newline noise in some column headers (loaders strip these at load time).
