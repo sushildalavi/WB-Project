@@ -35,7 +35,10 @@ scrape  →  clean  →  topic-filter  →  LLM coding  →  human coding (sampl
 4. **LLM coding** (GPT-4o / 4o-mini) for themes, sentiment, emotions, sexism flags.
 5. **Human coding** on a sample using the WB instrument
    ([`codebook/codebook_spec.md`](codebook/codebook_spec.md)) for ground truth.
-6. **Analysis** in `notebooks/`; dashboard in `src/app.py`; figures in `reports/`.
+6. **Analysis** in `notebooks/`; dashboard in `src/app.py`.
+
+The full study write-up lives at the repo root:
+[`WB_MIP Social Listening Report Draft - WB_Penn Feedback.docx`](WB_MIP%20Social%20Listening%20Report%20Draft%20-%20WB_Penn%20Feedback.docx).
 
 ## Layout
 
@@ -45,9 +48,10 @@ WB-Project/
 ├── requirements.txt
 ├── .env.example                    # template for OPENAI_API_KEY
 ├── .gitignore
+├── WB_MIP Social Listening Report Draft - WB_Penn Feedback.docx
 ├── codebook/
 │   ├── keywords.docx               # keyword sets per theme (EN + Hindi/Hinglish)
-│   └── codebook_spec.md            # human-coding column spec (v1 + v2)
+│   └── codebook_spec.md            # human-coding column spec
 ├── data/
 │   ├── GOLD_MANIFEST.md            # gold-release mirror table & checks
 │   ├── raw/{india,kenya,nigeria}/        # original scrapes — do not modify
@@ -64,15 +68,8 @@ WB-Project/
 │       ├── paths.py                      # canonical file paths + GOLD_MIRROR
 │       ├── clean.py                      # column normalization, theme expansion
 │       └── loaders.py                    # typed dataset loaders
-├── scripts/
-│   ├── patch_notebooks.py                # rewrite legacy paths in notebooks
-│   └── validate_data.py                  # 3-layer sanity-check + gold byte-identity
-├── reports/
-│   ├── figures/{india,kenya}/            # publication PNGs
-│   └── docs/{india,kenya}/               # bundled .docx visual reports
-└── archive/                              # superseded / older / sample files
-    ├── india/  kenya/  nigeria/  misc/
-    └── _pre_clean/                       # pre-cleanup snapshots
+└── scripts/
+    └── validate_data.py                  # 3-layer sanity-check + gold byte-identity
 ```
 
 ## Human-coded datasets (3 primary + 1 India extension)
@@ -166,11 +163,3 @@ column names without any on-disk modification.
 
 Layer 3 reports `SKIP` (not `FAIL`) when the upstream gold directory is
 absent, so the validator is portable.
-
-## archive/
-
-Holds language variants, older codebook revisions, and small subsamples kept
-for provenance. `archive/_pre_clean/` snapshots from a brief experiment with
-on-disk header normalization (which has since been reverted in favour of
-load-time normalization). Nothing in the active pipeline reads from
-`archive/`.
