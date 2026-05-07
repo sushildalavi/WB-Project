@@ -12,13 +12,25 @@ how each stage maps onto folders in this repo.
 | Reach layer (separate) | `data/reach/{country}/` | Per-video / per-clip engagement metrics for context. Not used for thematic coding. |
 | Ground truth | `data/human_coded/{country}/` | Focused subsets coded by 3 trained human annotators. |
 
-## Country-specific volumes (from report Section 2.1 + Appendix H)
+## Country-specific volumes
 
-| Country | Raw → Analysis-Ready → Focused (LLM + Human) |
-|---------|----------------------------------------------|
-| Nigeria | 32,383 Nairaland posts → 922 → 100 / 100 |
-| India | 99,049 YouTube comments → 951 → 102 / 102 |
-| Kenya | 19,394 tweets → 3,140 → 103 / 103 |
+The report reports the *full pre-dedup scrape* counts; what's shipped in
+this repo is the *deduplicated raw* layer (`data/raw/`). Both numbers
+appear below for transparency.
+
+| Country | Pre-dedup scrape (report §2.1) | Shipped raw rows | Analysis-Ready | Focused (LLM + Human) |
+|---------|---|---|---|---|
+| Nigeria | 32,383 Nairaland posts | 21,155 | 922 | 100 / 100 |
+| India   | 99,049 YouTube comments | 99,049 | 951 | 102 / 102 |
+| Kenya   | 19,394 tweets (file lines) | 10,000 records | 3,140 | 103 / 103 |
+
+Notes on counts:
+- Nigeria's raw scrape was 32,383 posts before deduplication; the shipped
+  `BBNaija_nairaland.csv` contains 21,155 deduplicated records.
+- Kenya's `RHONairobi_tweets.csv` is 19,394 file-lines but **10,000
+  records** (some tweets contain embedded newlines that bloat the line count).
+  pandas reads 10,000 rows. The report's "19,394 tweets" is the file line
+  count.
 
 ## Models (from Appendix C7 + actual notebook usage)
 

@@ -67,13 +67,13 @@ universe of comments — agreement between them is the validation gate.
 ```mermaid
 flowchart LR
   subgraph Nigeria_BBNaija
-    N1[32,383 Nairaland posts] --> N2[922 analysis-ready] --> N3[100 LLM + 100 human]
+    N1[21,155 Nairaland posts<br/>32,383 pre-dedup] --> N2[922 analysis-ready] --> N3[100 LLM + 100 human]
   end
   subgraph India_MIH_S2
     I1[99,049 YT comments] --> I2[951 analysis-ready] --> I3[102 LLM + 102 human]
   end
   subgraph Kenya_RHON
-    K1[19,394 tweets] --> K2[3,140 analysis-ready] --> K3[103 LLM + 103 human]
+    K1[10,000 tweets<br/>19,394 file-lines] --> K2[3,140 analysis-ready] --> K3[103 LLM + 103 human]
   end
 ```
 
@@ -162,14 +162,14 @@ patterns are documented in Appendix I of the report.
 ## Run it
 
 ```bash
-pip install -r requirements.txt
+pip install -e .                    # editable install — exposes `wbproj` package
 cp .env.example .env                # add OPENAI_API_KEY if running coding cells
 python scripts/validate_data.py     # 40-assertion integrity check
 streamlit run src/app.py            # dashboards: India · Nigeria · Kenya
 ```
 
 The Streamlit app reads everything via `pathlib`, so it runs from any
-working directory.
+working directory once the package is installed.
 
 ---
 
@@ -203,8 +203,13 @@ failing — so the validator is portable.
   column headers (whitespace, embedded newlines). Loaders normalize these
   in memory at load time — the source files stay byte-identical to gold.
 - The BBNaija TikTok reach dataset described in Section 2.1 of the report
-  (~60K comments / 372 videos) is not currently in the repo. Drop a file at
-  `data/raw/nigeria/BBNaija_tiktok.xlsx` to enable the BBNaija TikTok tab.
+  (~60K comments / 372 videos) is not currently in the repo. To enable the
+  BBNaija TikTok dashboard tab, drop an `.xlsx` at
+  `data/raw/nigeria/BBNaija_tiktok.xlsx` with **at minimum**:
+  `video_url, views, likes, comments, shares`. Optional columns the loader
+  also uses if present: `created_at, Author Username, followers,
+  days_since_posted, Hashtag1, Hashtag2, Hashtag3`. If required columns are
+  missing the loader raises a clear error rather than silently degrading.
 - **Two model tiers** (centralized in [`src/wbproj/config.py`](src/wbproj/config.py)):
   - `gpt-5.1` at `temperature=0` for production labeling — themes, sentiment,
     emotion, and sexism flags. This is what the report attributes to
